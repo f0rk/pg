@@ -1,0 +1,25 @@
+pg
+==
+
+A light wrapper around psql, making it easier to define default arguments for
+connecting to various hosts.
+
+Usage of this command requires a ~/.pgalias file, which is actually just a
+shell script defining variables to be used as alias arguments. For instance,
+you might have a ~/.pgalias file like so:
+
+fetch="-vFETCH_COUNT=10000"
+local="$fetch -p 5433"
+remote="$fetch -d ryan -U ryan"
+
+test="$local -d test"
+staging="$remote -h staging.ryankelly.us"
+prod="$remote -h ryankelly.us"
+
+You would then be able to connect to, say, staging.ryankelly.us with your
+chosen options as follows:
+
+pg staging
+
+And that's it. You can pipe and do whatever else, and your ~/.pgpass and
+~/.psqlrc files are used like normal.
