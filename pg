@@ -1,7 +1,28 @@
 #!/bin/sh
 
+if [ -z "$1" ]; then
+    echo "usage pg [alias [-p command]]"
+    return 1
+fi
+
 alias=$1
-shift
+shift 
+
+getopts ":p:" opt; 
+case $opt in
+    p)
+        program=$OPTARG
+        shift $((OPTIND-1))
+        ;;
+    :)
+        echo "Option -p requires an argument." >&2
+        exit 1
+        ;;
+    \?)
+        echo "Unrecognized argument." >&2
+        exit 1
+        ;;
+esac
 
 if [ -r "$HOME/.pgalias" ]; then
     . "$HOME/.pgalias"
@@ -14,5 +35,8 @@ if [ -z "$flags" -o -z "$alias" ]; then
     exit 1
 fi
 
-exec psql $flags $@
-
+if [ -n "$program" ]; then
+    exec $program $flags $@
+else
+    exec psql $flags $@
+fi
