@@ -10,7 +10,7 @@ fi
 eval flags=\$$alias
 
 if [ -z "$flags" -o -z "$alias" ]; then
-    echo "unkown alias '$alias'"
+    echo "unknown alias '$alias'"
     exit 1
 fi
 
