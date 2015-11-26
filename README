@@ -1,8 +1,8 @@
 pg
 ==
 
-A light wrapper around psql, making it easier to define default arguments for
-connecting to various hosts.
+A light wrapper around psql or another pg program of your choice, making it 
+easier to define default arguments for connecting to various hosts.
 
 Usage of this command requires a ~/.pgalias file, which is actually just a
 shell script defining variables to be used as alias arguments. For instance,
@@ -19,7 +19,12 @@ prod="$remote -h ryankelly.us"
 You would then be able to connect to, say, staging.ryankelly.us with your
 chosen options as follows:
 
-pg staging
+pg staging 
+
+If you wanted to dump some tables from the same host you could dump them
+as follows:
+
+pg staging -p pg_dump -t test -f test.dump
 
 And that's it. You can pipe and do whatever else, and your ~/.pgpass and
 ~/.psqlrc files are used like normal.
